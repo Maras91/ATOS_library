@@ -26,6 +26,15 @@ public class Book {
 	public int getId() {
 		return id;
 	}
+	public int getYear() {
+		return year;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public String getAuthor() {
+		return author;
+	}
 	public Boolean getIsLent() {
 		return isLent;
 	}
