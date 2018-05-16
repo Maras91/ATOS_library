@@ -9,13 +9,14 @@ public class Book {
 	private int id;
 	private int year;
 	private String author;
-	private Boolean isLent;
+	private Boolean isLend;
+	private int CustomerId;
 	Book(String title, int year, String autor)
 	{
 		this.title=title;
 		this.year=year;
 		this.author=autor;
-		setIsLent(false);
+		setIsLend(false);
 		createUniqueId();
 	}
 	private void createUniqueId() {
@@ -35,14 +36,21 @@ public class Book {
 	public String getAuthor() {
 		return author;
 	}
-	public Boolean getIsLent() {
-		return isLent;
+	public Boolean getIsLend() {
+		return isLend;
 	}
-	public void setIsLent(Boolean isLent) {
-		this.isLent = isLent;
+
+	public void setIsLend(Boolean isLend) {
+		this.isLend = isLend;
 	}
 	public String toString() {
 		return "ID: "+id+" tltle: "+title +" author: "+author+" year: "+year;
 		
+	}
+	public int getCustomerId() {
+		return CustomerId;
+	}
+	public void setCustomerId(int customerId) {
+		CustomerId = customerId;
 	}
 }

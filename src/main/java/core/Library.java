@@ -5,12 +5,18 @@ import java.util.List;
 
 public class Library {
 	private List<Book> allBooks;
+	private List<Customer> allCustomers;
 	public List<Book> getAllBooks(){
 		return allBooks;
 	}
 	public Library()
 	{
 		allBooks = new ArrayList<Book>();
+		allCustomers = new ArrayList<Customer>();
+	}
+	public void addCustomer(String name, String surname) {
+		allCustomers.add(new Customer(name,surname));
+		return;
 	}
 	public void addBook(String title, int year, String autor) {
 		allBooks.add(new Book(title, year, autor));
@@ -18,7 +24,7 @@ public class Library {
 	}
 	public void removeBook(int id) {
 		for (Book book : allBooks) {
-			if (book.getId()==id && book.getIsLent()==false) {
+			if (book.getId()==id && book.getIsLend()==false) {
 				allBooks.remove(book);
 			}
 		}
@@ -97,5 +103,40 @@ public class Library {
 		}
 		showBooksList(foundBooks);
 		return ;
+	}
+	public void lendBook(int customerid, int id) {
+		Book chosenBook = null;
+		for(Book book:allBooks) {
+			if (book.getId()==id) {
+				chosenBook=book;
+			}
+		}
+		for(Customer customer:allCustomers) { 
+			if (customer.getId()==customerid) {
+				chosenBook.setIsLend(true);
+				chosenBook.setCustomerId(customer.getId());
+				customer.addBook(chosenBook);
+			}
+		}
+	}
+	public void bookDetails (int id) {
+		Book chosenBook = null;
+		for(Book book:allBooks) {
+			if (book.getId()==id) {
+				chosenBook=book;
+			}
+		} 
+		System.out.print(chosenBook.toString());
+		if (chosenBook.getIsLend()) {
+			for(Customer customer:allCustomers) {
+				if (chosenBook.getCustomerId()==customer.getId()) {
+					System.out.print(" book lended "+customer.toString());
+				}
+			}
+		} else
+		{
+			System.out.println(" book is not lend");
+		}
+		return;
 	}
 }
