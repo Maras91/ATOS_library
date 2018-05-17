@@ -53,63 +53,62 @@ public class BooksList {
 		System.out.println("Books in library: " + (listBooks.size() - lendbooks));
 	}
 
-	public void foundBooks(String keyword, int year, String keyword2) {
+	public List<Book> findBooks(String title, Integer year, String author) {
 		List<Book> foundBooks = new ArrayList<Book>();
-		for (Book book : allBooks) {
-			if (book.getYear() == year) {
-				if (book.getTitle().equals(keyword) && book.getAuthor().equals(keyword2)
-						|| book.getAuthor().equals(keyword) && book.getTitle().equals(keyword2)) {
+		if (title == null && year == null && author != null) {
+			for (Book book : allBooks) {
+				if (book.getAuthor().equals(author)) {
 					foundBooks.add(book);
 				}
 			}
 		}
-		System.out.println("Books found:");
-		showBooksList(foundBooks);
-	}
-
-	public void foundBooks(String keyword, int year) {
-		List<Book> foundBooks = new ArrayList<Book>();
-		for (Book book : allBooks) {
-			if ((book.getTitle().equals(keyword) || book.getAuthor().equals(keyword)) && book.getYear() == year) {
-				foundBooks.add(book);
+		if (title != null && year == null && author == null) {
+			for (Book book : allBooks) {
+				if (book.getTitle().equals(title)) {
+					foundBooks.add(book);
+				}
 			}
 		}
-		System.out.println("Books found:");
-		showBooksList(foundBooks);
-	}
-
-	public void foundBooks(String keyword, String keyword2) {
-		List<Book> foundBooks = new ArrayList<Book>();
-		for (Book book : allBooks) {
-			if (book.getTitle().equals(keyword) && book.getAuthor().equals(keyword2)
-					|| book.getAuthor().equals(keyword) && book.getTitle().equals(keyword2)) {
-				foundBooks.add(book);
+		if (title == null && year != null && author == null) {
+			for (Book book : allBooks) {
+				if (book.getYear() == year) {
+					foundBooks.add(book);
+				}
 			}
 		}
-		System.out.println("Books found:");
-		showBooksList(foundBooks);
-	}
 
-	public void foundBooks(String keyword) {
-		List<Book> foundBooks = new ArrayList<Book>();
-		for (Book book : allBooks) {
-			if (book.getTitle().equals(keyword) || book.getAuthor().equals(keyword)) {
-				foundBooks.add(book);
+		if (author == null && title != null && year != null) {
+			for (Book book : allBooks) {
+				if (book.getYear() == year && book.getTitle().equals(title)) {
+					foundBooks.add(book);
+				}
 			}
 		}
-		System.out.println("Books found:");
-		showBooksList(foundBooks);
-	}
-
-	public void foundBooks(int year) {
-		List<Book> foundBooks = new ArrayList<Book>();
-		for (Book book : allBooks) {
-			if (book.getYear() == year) {
-				foundBooks.add(book);
+		if (author != null && title == null && year != null) {
+			for (Book book : allBooks) {
+				if (book.getYear() == year && book.getAuthor().equals(author)) {
+					foundBooks.add(book);
+				}
 			}
 		}
-		System.out.println("Books found:");
-		showBooksList(foundBooks);
+		if (author != null && title != null && year == null) {
+			for (Book book : allBooks) {
+				if (book.getTitle().equals(title) && book.getAuthor().equals(author)) {
+					foundBooks.add(book);
+				}
+			}
+		}
+		if (author != null && title != null && year != null) {
+			for (Book book : allBooks) {
+				if (book.getTitle().equals(title) && book.getAuthor().equals(author) && book.getYear() == year) {
+					foundBooks.add(book);
+				}
+			}
+		}
+		if (author == null && title == null && year == null) {
+			throw new IllegalArgumentException("no argument in function");
+		}
+		return foundBooks;
 	}
 
 }

@@ -1,5 +1,6 @@
 package libraryTest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -11,24 +12,26 @@ public class Tests {
 
 	@Test
 	public void browserTests() {
-		/*
-		 * Library library = new Library();
-		 * 
-		 * library.getAllBooks().foundBooks("W.Koper", "drkula");
-		 * System.out.println(""); library.getAllBooks().foundBooks("W.Koper");
-		 * System.out.println(""); library.getAllBooks().foundBooks("Szachy", "A.Bcer");
-		 * System.out.println(""); library.getAllBooks().foundBooks("W.Kopr", "drkula");
-		 * System.out.println(""); library.getAllBooks().foundBooks("szacy", "A.Bcer");
-		 * System.out.println(""); library.getAllBooks().foundBooks("Szachy", 2014);
-		 * System.out.println(""); library.getAllBooks().foundBooks("Szachya", 2014);
-		 * System.out.println(""); library.getAllBooks().foundBooks("Szachy", 12014);
-		 * System.out.println(""); library.getAllBooks().foundBooks("Zabijaka", 2000,
-		 * "A.Bober"); System.out.println("");
-		 * library.getAllBooks().foundBooks("Zabijak", 2000, "A.Bober");
-		 * System.out.println(""); library.getAllBooks().foundBooks("Zabijaka", 200,
-		 * "A.Bober"); System.out.println("");
-		 * library.getAllBooks().foundBooks("Zabijaka", 2000, "A.Bobe");
-		 */
+		Library library = new Library();
+		assertEquals("ID: 13 tltle: Zabijaka author: A.Bober year: 2000", library.getAllBooks().findBooks("Zabijaka", null, null).get(0).toString());
+		assertTrue(library.getAllBooks().findBooks("Zabijakaa", null, null).isEmpty());
+		assertEquals("ID: 13 tltle: Zabijaka author: A.Bober year: 2000", library.getAllBooks().findBooks(null, 2000, null).get(0).toString());
+		assertEquals("ID: 13 tltle: Zabijaka author: A.Bober year: 2000", library.getAllBooks().findBooks(null, null, "A.Bober").get(0).toString());
+		
+		assertEquals("ID: 13 tltle: Zabijaka author: A.Bober year: 2000", library.getAllBooks().findBooks(null, 2000, "A.Bober").get(0).toString());
+		assertEquals("ID: 13 tltle: Zabijaka author: A.Bober year: 2000", library.getAllBooks().findBooks("Zabijaka", null, "A.Bober").get(0).toString());
+		assertEquals("ID: 13 tltle: Zabijaka author: A.Bober year: 2000", library.getAllBooks().findBooks("Zabijaka", 2000, null).get(0).toString());
+		
+		assertEquals("ID: 13 tltle: Zabijaka author: A.Bober year: 2000", library.getAllBooks().findBooks("Zabijaka", 2000, "A.Bober").get(0).toString());
+		
+		try {
+		library.getAllBooks().findBooks(null, null, null).get(0).toString();
+		fail();
+		}catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(),"no argument in function");
+		}
+		
+		assertEquals("ID: 16 tltle: Kolo author: A.Boccaa year: 2015", library.getAllBooks().findBooks(null, 2015, null).get(0).toString());
 	}
 
 	@Test
@@ -60,20 +63,20 @@ public class Tests {
 			library.lendBook(5, 2);
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertTrue(e.getMessage().equals("The customer with id: " + 5 + " not exist"));
+			assertEquals(e.getMessage(),"The customer with id: " + 5 + " not exist");
 		}
 		library.lendBook(1, 2);
 		try {
 			library.lendBook(2, 2);
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertTrue(e.getMessage().equals("The book with id: " + 2 + " is already lended by customer " + "Marcin Boberek"));
+			assertEquals(e.getMessage(),"The book with id: " + 2 + " is already lended by customer " + "Marcin Boberek");
 		}
 		try {
 			library.lendBook(2, 400);
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertTrue(e.getMessage().equals("The book with id: " + 400 + " not exist"));
+			assertEquals(e.getMessage(),"The book with id: " + 400 + " not exist");
 		}
 
 		library.bookDetails(1);
@@ -82,14 +85,14 @@ public class Tests {
 			library.bookDetails(200);
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertTrue(e.getMessage().equals("The book with id: " + 200 + " not exist"));
+			assertEquals(e.getMessage(),"The book with id: " + 200 + " not exist");
 		}
 		 library.getAllBooks().removeBook(5);
 		 try { 
 			 library.lendBook(1, 5);
 			 fail();
 			} catch (IllegalArgumentException e) {
-				assertTrue(e.getMessage().equals("The book with id: " + 5 + " not exist"));
+				assertEquals(e.getMessage(),"The book with id: " + 5 + " not exist");
 			}
 
 	}
